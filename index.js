@@ -20,6 +20,16 @@ void main() {
 
 `;
 
+const fragmentShader = `
+varying vec2 vUV;
+uniform sampler2D tex;
+
+void main() {
+  gl_FragColor = texture2D(tex, vUV);
+}
+
+`;
+
 function getRT(width, height, fragmentShader) {
   const r1 = {};
   r1.rt = new THREE.WebGLRenderTarget(width, height, {
@@ -81,8 +91,8 @@ function init() {
     renderer.getContext().getExtension("OES_texture_float");
     renderer.getContext().getExtension("OES_texture_float_linear");
     container.appendChild(renderer.domElement);
-    onWindowResize();
-    window.addEventListener('resize', onWindowResize, false);
+    //onWindowResize();
+    //window.addEventListener('resize', onWindowResize, false);
     renderer.setSize(width, height);
     renderer.domElement.width = width;
     renderer.domElement.height = height;
