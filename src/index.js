@@ -53,6 +53,7 @@ function getRT(width, height, fragmentShader) {
       uniforms: r1.uniforms,
       vertexShader: vertexShader,
       fragmentShader: fragmentShader
+
   });
   r1.mesh = new THREE.Mesh(r1.geo, r1.material);
   r1.scene.add(r1.mesh);
@@ -61,6 +62,14 @@ function getRT(width, height, fragmentShader) {
 }
 
 function init() {
+    $("body").append(`<div id="app">
+        <!--<img style="display: none;" src="https://opengameart.org/sites/default/files/terrain_atlas.png"></img>
+        -->
+        asdasdsadasdsadddddddddddddddddd
+        <img id="tiles" style="display: none;" src="resources/images/terrain_atlas.png"></img>
+        <div id="container"></div>
+    </div>`);
+
     const width = window.innerWidth;
     const height = width; // window.innerHeight;
     container = document.getElementById('container');
@@ -71,12 +80,14 @@ function init() {
 
     state.r1 = getRT(width, height, splitFragmentShader);
 
+    const tex = new THREE.Texture($("#tiles")[0]);
+
     const geometry = new THREE.PlaneBufferGeometry(2, 2);
     uniforms = {
         "time": { value: 1.0 },
         "aspect": { value: width / height },
         "res": { value: new THREE.Vector2(width, height) },
-        "tex": { value: state.r1.rt.texture}
+        "tex": { tex }
     };
     const material = new THREE.ShaderMaterial({
         uniforms: uniforms,
